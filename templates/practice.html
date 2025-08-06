@@ -1,0 +1,587 @@
+{% extends "base.html" %}
+
+{% block title %}Practice - Technical Interview Prep{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <!-- Practice Header -->
+    <div class="challenge-header fade-in-up mb-8">
+        <h1 class="challenge-title">🚀 Practice Arena</h1>
+        <p class="challenge-subtitle">Technical Interview Preparation • Code, Explain, Analyze</p>
+    </div>
+
+    <!-- Filter Controls -->
+    <div class="card fade-in-up mb-8">
+        <div class="card-header">
+            <h2 class="card-title">🎯 Problem Filters</h2>
+            <p class="card-subtitle">Select topic and difficulty level</p>
+        </div>
+        <div class="grid grid-3 gap-4">
+            <div class="form-group">
+                <label class="form-label">Difficulty</label>
+                <select id="difficulty-select" class="form-select">
+                    <option value="easy" {% if difficulty == 'easy' %}selected{% endif %}>🟢 Easy</option>
+                    <option value="medium" {% if difficulty == 'medium' %}selected{% endif %}>🟡 Medium</option>
+                    <option value="hard" {% if difficulty == 'hard' %}selected{% endif %}>🔴 Hard</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Topic</label>
+                <select id="topic-select" class="form-select">
+                    <option value="arrays" {% if topic == 'arrays' %}selected{% endif %}>📊 Arrays</option>
+                    <option value="strings" {% if topic == 'strings' %}selected{% endif %}>🔤 Strings</option>
+                    <option value="trees" {% if topic == 'trees' %}selected{% endif %}>🌳 Trees</option>
+                    <option value="linked_lists" {% if topic == 'linked_lists' %}selected{% endif %}>🔗 Linked Lists</option>
+                    <option value="dynamic_programming" {% if topic == 'dynamic_programming' %}selected{% endif %}>⚡ Dynamic Programming</option>
+                    <option value="graphs" {% if topic == 'graphs' %}selected{% endif %}>🕸️ Graphs</option>
+                    <option value="stacks" {% if topic == 'stacks' %}selected{% endif %}>📚 Stacks</option>
+                    <option value="hash_tables" {% if topic == 'hash_tables' %}selected{% endif %}>🗂️ Hash Tables</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Language</label>
+                <select id="language-select" class="form-select">
+                    <option value="python" {% if language == 'python' %}selected{% endif %}>🐍 Python</option>
+                    <option value="javascript" {% if language == 'javascript' %}selected{% endif %}>🟨 JavaScript</option>
+                    <option value="java" {% if language == 'java' %}selected{% endif %}>☕ Java</option>
+                    <option value="cpp" {% if language == 'cpp' %}selected{% endif %}>⚡ C++</option>
+                </select>
+            </div>
+        </div>
+        <div class="mt-4">
+            <button id="get-new-problem" class="btn btn-primary">
+                🔄 Get Problem
+            </button>
+        </div>
+    </div>
+
+    <div class="grid grid-2 gap-8">
+        <!-- Problem Description -->
+        <div class="card fade-in-up">
+            <div class="card-header">
+                <h2 class="card-title">{{ problem.title }}</h2>
+                <div class="flex items-center gap-4 mt-2">
+                    <span class="difficulty-badge difficulty-{{ problem.difficulty }}">{{ problem.difficulty }}</span>
+                    <span class="tag">{{ problem.topic.replace('-', ' ').title() }}</span>
+                    {% if problem.tags %}
+                        {% for tag in problem.tags %}
+                        <span class="tag">{{ tag }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="problem-content">
+                <div class="mb-6">
+                    <h4 class="section-title">Problem Description</h4>
+                    <p class="text-text-secondary leading-relaxed">{{ problem.description }}</p>
+                </div>
+                
+                {% if problem.examples %}
+                <div class="mb-6">
+                    <h4 class="section-title">Examples</h4>
+                    {% for example in problem.examples %}
+                    <div class="example">
+                        <div class="example-title">Example {{ loop.index }}:</div>
+                        <div class="mb-2">
+                            <strong class="text-primary-red">Input:</strong> 
+                            <code class="example-code">{{ example.input }}</code>
+                        </div>
+                        <div class="mb-2">
+                            <strong class="text-primary-red">Output:</strong> 
+                            <code class="example-code">{{ example.output }}</code>
+                        </div>
+                        {% if example.explanation %}
+                        <div class="text-sm text-text-tertiary">
+                            <strong>Explanation:</strong> {{ example.explanation }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% if problem.constraints %}
+                <div class="mb-6">
+                    <h4 class="section-title">Constraints</h4>
+                    <ul class="text-text-secondary space-y-1">
+                        {% for constraint in problem.constraints %}
+                        <li class="flex items-start">
+                            <span class="text-primary-red mr-2">•</span>
+                            {{ constraint }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if problem.hints %}
+                <div class="mb-6">
+                    <h4 class="section-title">Hints</h4>
+                    <div class="hints-container">
+                        {% for hint in problem.hints %}
+                        <details class="hint">
+                            <summary class="cursor-pointer font-semibold">
+                                💡 Hint {{ loop.index }}
+                            </summary>
+                            <div class="mt-2 text-text-secondary">{{ hint }}</div>
+                        </details>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="flex gap-4 flex-wrap items-center">
+                    {% if problem.leetcode_url %}
+                    <a href="{{ problem.leetcode_url }}" target="_blank" class="btn btn-outline">
+                        🔗 LeetCode 
+                    </a>
+                    {% else %}
+                    <a href="https://leetcode.com/problems/{{ problem.id.replace('_', '-') }}/" target="_blank" class="btn btn-outline">
+                        🔗 View on LeetCode
+                    </a>
+                    {% endif %}
+                    <span class="tag">DSA Interview Prep</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Solution Panel -->
+        <div class="card fade-in-up">
+            <div class="card-header">
+                <h3 class="card-title">💻 Your Solution</h3>
+                <p class="card-subtitle">Code your solution and explain your approach</p>
+            </div>
+            
+            <!-- Code Editor -->
+            <div class="code-editor mb-6">
+                <div class="flex items-center justify-between p-3 bg-bg-dark-elevated rounded-t-lg border-b border-slate-600">
+                    <div class="flex items-center gap-2">
+                        <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                        <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                        <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                    </div>
+                    <span class="text-text-secondary text-sm" id="filename-display">solution.py</span>
+                </div>
+                <textarea id="code-input" class="w-full h-64 p-4 bg-slate-900 text-text-primary font-mono text-sm border-0 rounded-b-lg resize-none focus:outline-none focus:ring-2 focus:ring-primary-yellow" 
+                          placeholder="Write your solution here...">{{ problem.solution_template or 'def solve():\n    # Your solution here\n    pass' }}</textarea>
+            </div>
+
+            <!-- Voice Recorder -->
+            <div class="voice-recorder mb-6" id="voice-recorder">
+                <div class="flex items-center gap-4 p-4 bg-bg-dark-elevated rounded-lg">
+                    <button class="btn btn-secondary" id="record-btn">🎤 Record</button>
+                    <div>
+                        <p id="recorder-status" class="font-semibold">Click to explain your approach</p>
+                        <div class="text-sm text-text-tertiary">
+                            Explain your thought process, algorithm choice, and complexity
+                        </div>
+                    </div>
+                </div>
+                <div id="transcription" class="mt-4 hidden">
+                    <h5 class="font-semibold mb-2 text-secondary-yellow">Transcription:</h5>
+                    <div id="transcription-text" class="p-4 bg-bg-dark-elevated rounded-lg text-text-secondary"></div>
+                </div>
+            </div>
+
+            <!-- Text Explanation -->
+            <div class="form-group mb-6">
+                <label for="text-explanation" class="form-label">Explanation by the user:</label>
+                <textarea id="text-explanation" rows="4" class="form-input" 
+                          placeholder="Explain your approach, time complexity, space complexity, and thought process..."></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button id="submit-solution" class="btn btn-primary w-full">
+                🤖 Submit for AI Analysis
+            </button>
+        </div>
+    </div>
+
+    <!-- AI Analysis Panel -->
+    <div id="analysis-panel" class="card fade-in-up mt-8 hidden">
+        <div class="card-header">
+            <h3 class="card-title">🤖 Technical Analysis</h3>
+            <p class="card-subtitle">Senior Technical Recruiter Feedback</p>
+        </div>
+        <div id="analysis-content" class="loading">
+            <div class="spinner"></div>
+            Analyzing your solution...
+        </div>
+    </div>
+
+    <!-- Practice More Section -->
+    <div class="mt-8 fade-in-up">
+        <h2 class="section-title">🎯 Practice More</h2>
+        <div class="grid grid-3 gap-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">🎯 Same Topic</h4>
+                    <p class="card-subtitle">More {{ problem.topic.replace('-', ' ').title() }} problems</p>
+                </div>
+                <div class="space-y-2">
+                    <a href="/practice?topic={{ problem.topic }}&difficulty=easy" class="btn btn-outline w-full">🟢 Easy</a>
+                    <a href="/practice?topic={{ problem.topic }}&difficulty=medium" class="btn btn-outline w-full">🟡 Medium</a>
+                    <a href="/practice?topic={{ problem.topic }}&difficulty=hard" class="btn btn-outline w-full">🔴 Hard</a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">📊 Same Difficulty</h4>
+                    <p class="card-subtitle">More {{ problem.difficulty }} problems</p>
+                </div>
+                <div class="space-y-2">
+                    <a href="/practice?difficulty={{ problem.difficulty }}&topic=arrays" class="btn btn-outline w-full">📊 Arrays</a>
+                    <a href="/practice?difficulty={{ problem.difficulty }}&topic=strings" class="btn btn-outline w-full">🔤 Strings</a>
+                    <a href="/practice?difficulty={{ problem.difficulty }}&topic=trees" class="btn btn-outline w-full">🌳 Trees</a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">🎲 Random Practice</h4>
+                    <p class="card-subtitle">Explore different topics</p>
+                </div>
+                <div class="space-y-2">
+                    <a href="/practice?difficulty=easy" class="btn btn-outline w-full">🟢 Random Easy</a>
+                    <a href="/practice?difficulty=medium" class="btn btn-outline w-full">🟡 Random Medium</a>
+                    <a href="/practice?difficulty=hard" class="btn btn-outline w-full">🔴 Random Hard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let mediaRecorder;
+let audioChunks = [];
+let isRecording = false;
+
+document.addEventListener('DOMContentLoaded', function() {
+    setupEventListeners();
+    console.log('Practice page loaded successfully');
+});
+
+function setupEventListeners() {
+    try {
+        // Get elements with error checking
+        const recordBtn = document.getElementById('record-btn');
+        const submitBtn = document.getElementById('submit-solution');
+        const getNewProblemBtn = document.getElementById('get-new-problem');
+        const difficultySelect = document.getElementById('difficulty-select');
+        const languageSelect = document.getElementById('language-select');
+        const topicSelect = document.getElementById('topic-select');
+        
+        // Add event listeners with null checks
+        if (recordBtn) {
+            recordBtn.addEventListener('click', toggleRecording);
+        }
+        
+        if (submitBtn) {
+            submitBtn.addEventListener('click', submitSolution);
+        }
+        
+        if (getNewProblemBtn) {
+            getNewProblemBtn.addEventListener('click', getNewProblem);
+        }
+        
+        // Filter change handlers - update problem when filters change
+        if (difficultySelect) {
+            difficultySelect.addEventListener('change', getNewProblem);
+        }
+        
+        if (topicSelect) {
+            topicSelect.addEventListener('change', getNewProblem);
+        }
+        
+        if (languageSelect) {
+            languageSelect.addEventListener('change', updateLanguageTemplate);
+        }
+        
+        console.log('Event listeners set up successfully');
+        
+        // Initialize filename display on page load
+        updateLanguageTemplate();
+    } catch (error) {
+        console.error('Error setting up event listeners:', error);
+    }
+}
+
+function getNewProblem() {
+    try {
+        const difficulty = document.getElementById('difficulty-select')?.value || 'medium';
+        const topic = document.getElementById('topic-select')?.value || 'arrays';
+        const language = document.getElementById('language-select')?.value || 'python';
+        
+        // Navigate to practice page with selected filters
+        const url = `/practice?difficulty=${difficulty}&topic=${topic}&language=${language}`;
+        window.location.href = url;
+    } catch (error) {
+        console.error('Error getting new problem:', error);
+    }
+}
+
+function updateLanguageTemplate() {
+    try {
+        const language = document.getElementById('language-select')?.value || 'python';
+        const codeInput = document.getElementById('code-input');
+        const filenameDisplay = document.getElementById('filename-display');
+        
+        if (!codeInput) return;
+        
+        // Update filename extension based on language
+        const extensions = {
+            'python': 'py',
+            'javascript': 'js',
+            'java': 'java',
+            'cpp': 'cpp',
+            'c++': 'cpp',
+            }
+        
+        const extension = extensions[language] || 'txt';
+        if (filenameDisplay) {
+            filenameDisplay.textContent = `solution.${extension}`;
+        }
+        
+        const templates = {
+            python: `def solve(self, input_data):
+    # Your Python solution here
+    # Time Complexity: O(?)
+    # Space Complexity: O(?)
+    pass`,
+            javascript: `function solve(inputData) {
+    // Your JavaScript solution here
+    // Time Complexity: O(?)
+    // Space Complexity: O(?)
+}`,
+            java: `public class Solution {
+    public void solve(int[] input) {
+        // Your Java solution here
+        // Time Complexity: O(?)
+        // Space Complexity: O(?)
+    }
+}`,
+            cpp: `class Solution {
+public:
+    void solve(vector<int>& input) {
+        // Your C++ solution here
+        // Time Complexity: O(?)
+        // Space Complexity: O(?)
+    }
+};`
+        };
+        
+        codeInput.value = templates[language] || templates.python;
+    } catch (error) {
+        console.error('Error updating language template:', error);
+    }
+}
+
+async function toggleRecording() {
+    const recordBtn = document.getElementById('record-btn');
+    const status = document.getElementById('recorder-status');
+    const recorder = document.getElementById('voice-recorder');
+
+    if (!recordBtn || !status) return;
+
+    if (!isRecording) {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            
+            mediaRecorder.ondataavailable = event => {
+                audioChunks.push(event.data);
+            };
+            
+            mediaRecorder.onstop = async () => {
+                const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                const formData = new FormData();
+                formData.append('audio', audioBlob);
+                
+                status.textContent = 'Processing transcription...';
+                
+                try {
+                    // Simulate transcription (replace with actual API call)
+                    setTimeout(() => {
+                        const transcriptionDiv = document.getElementById('transcription');
+                        const transcriptionText = document.getElementById('transcription-text');
+                        const textExplanation = document.getElementById('text-explanation');
+                        
+                        if (transcriptionDiv && transcriptionText && textExplanation) {
+                            const mockTranscription = " ";
+                            transcriptionDiv.classList.remove('hidden');
+                            transcriptionText.textContent = mockTranscription;
+                            textExplanation.value = mockTranscription;
+                        }
+                        
+                        status.textContent = 'Transcription complete!';
+                    }, 2000);
+                } catch (error) {
+                    status.textContent = 'Transcription failed. Please try again.';
+                    console.error('Transcription error:', error);
+                }
+                
+                // Reset recording state
+                audioChunks = [];
+                isRecording = false;
+                recordBtn.textContent = '🎤 Record';
+                if (recorder) recorder.classList.remove('recording');
+            };
+            
+            mediaRecorder.start();
+            isRecording = true;
+            recordBtn.textContent = '⏹️ Stop';
+            if (recorder) recorder.classList.add('recording');
+            status.textContent = 'Recording... Click stop when finished';
+            
+        } catch (error) {
+            status.textContent = 'Microphone access denied or not available';
+            console.error('Recording error:', error);
+        }
+    } else {
+        if (mediaRecorder && mediaRecorder.state === 'recording') {
+            mediaRecorder.stop();
+            mediaRecorder.stream.getTracks().forEach(track => track.stop());
+        }
+    }
+}
+
+async function submitSolution() {
+    const submitBtn = document.getElementById('submit-solution');
+    const codeInput = document.getElementById('code-input');
+    const explanationInput = document.getElementById('text-explanation');
+    const languageSelect = document.getElementById('language-select');
+    
+    if (!submitBtn || !codeInput || !explanationInput || !languageSelect) {
+        alert('Required form elements not found');
+        return;
+    }
+    
+    const code = codeInput.value.trim();
+    const explanation = explanationInput.value.trim();
+    
+    if (!code) {
+        alert('Please write your solution code');
+        return;
+    }
+    
+    if (!explanation) {
+        alert('Please provide an explanation of your approach');
+        return;
+    }
+    
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = '🔄 Analyzing...';
+    submitBtn.disabled = true;
+    
+    const data = {
+        problem_id: '{{ problem.id }}',
+        code: code,
+        explanation: explanation,
+        language: languageSelect.value
+    };
+    
+    try {
+        const response = await fetch('/api/submit-solution', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok && result) {
+            displayAnalysis(result);
+        } else {
+            throw new Error(result.error || 'Submission failed');
+        }
+    } catch (error) {
+        console.error('Submission error:', error);
+        alert('Submission failed: ' + error.message);
+    } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    }
+}
+
+function displayAnalysis(analysis) {
+    const panel = document.getElementById('analysis-panel');
+    const content = document.getElementById('analysis-content');
+
+    if (!panel || !content) return;
+
+    // Only show analysis if we have real scores (not 0 or undefined)
+    const hasRealScores = analysis.code_quality > 0 || analysis.algorithm_efficiency > 0 ||
+                         analysis.communication_skills > 0 || analysis.problem_solving > 0;
+
+    if (!hasRealScores) {
+        content.innerHTML = `
+            <div class="text-center py-8">
+                <div class="spinner mb-4"></div>
+                <h4 class="text-lg font-semibold mb-2">🤖 Analyzing Your Solution...</h4>
+                <p class="text-gray-600">Senior Technical Recruiter is reviewing your code quality, algorithm efficiency, and interview readiness...</p>
+                <p class="text-sm text-gray-500 mt-2">This may take a few moments for comprehensive analysis.</p>
+            </div>
+        `;
+        panel.classList.remove('hidden');
+        return;
+    }
+
+    const scores = {
+        'Code Quality': analysis.code_quality,
+        'Algorithm Efficiency': analysis.algorithm_efficiency,
+        'Communication': analysis.communication_skills,
+        'Problem Solving': analysis.problem_solving,
+        'Interview Readiness': analysis.interview_readiness
+    };
+
+    content.innerHTML = `
+        <div class="score-grid mb-6">
+            ${Object.entries(scores).map(([label, score]) => `
+                <div class="score-item">
+                    <span class="score-value ${getScoreClass(score)}">${score}</span>
+                    <span class="score-label">${label}</span>
+                </div>
+            `).join('')}
+        </div>
+
+        <div class="space-y-6">
+            <div class="card">
+                <h4 class="card-title mb-4">🎯 Senior Recruiter Feedback</h4>
+                <div class="text-text-secondary leading-relaxed">
+                    ${analysis.feedback || 'Analysis in progress...'}
+                </div>
+            </div>
+
+            ${analysis.recommendation ? `
+                <div class="card border-primary-red">
+                    <h4 class="card-title text-primary-red mb-4">💡 Professional Recommendation</h4>
+                    <div class="text-text-secondary">${analysis.recommendation}</div>
+                </div>
+            ` : ''}
+        </div>
+    `;
+
+    panel.classList.remove('hidden');
+    panel.scrollIntoView({ behavior: 'smooth' });
+}
+
+function getScoreClass(score) {
+    if (score >= 80) return 'score-excellent';
+    if (score >= 70) return 'score-good';
+    if (score >= 60) return 'score-average';
+    if (score >= 40) return 'score-poor';
+    return 'score-critical';
+}
+
+// Initialize language template on page load
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(updateLanguageTemplate, 100);
+});
+</script>
+{% endblock %}
