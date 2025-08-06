@@ -26,7 +26,7 @@ redis_client = redis.Redis(
 )
 
 # Initialize Redis AI features
-redis_ai = get_redis_ai()
+# redis_ai = get_redis_ai()
 
 # Initialize AI Service
 ai_service = AIService()
@@ -430,12 +430,12 @@ def get_problems():
 @app.route('/api/recommendations')
 def get_recommendations():
     user_id = session.get('user_id', 'anonymous')
-    recommendations = redis_ai.get_problem_recommendations(user_id)
+    recommendations = #redis_ai.get_problem_recommendations(user_id)
     return jsonify(recommendations)
 
 @app.route('/api/trending')
 def get_trending():
-    trending = redis_ai.get_trending_problems()
+    trending = #redis_ai.get_trending_problems()
     return jsonify(trending)
 
 # Removed similar problems API - replaced with direct navigation links
