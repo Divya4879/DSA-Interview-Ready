@@ -102,38 +102,6 @@ DEMO_SCRIPT.md
 video_script.md
 deploy.md
 
-# Problem generation scripts (keep only essential ones)
-generate_problems.py
-create_*.py
-add_*.py
-fix_*.py
-comprehensive_problems*.py
-*_problems*.py
-
-# AI/Voice test files
-voice_*.py
-ai_*.py
-*_voice*.py
-*_ai*.py
-analysis_*.py
-senior_recruiter_*.py
-
-# Redis setup files (keep only essential)
-redis_*.py
-*_redis*.py
-init_redis*.py
-setup_redis*.py
-verify_redis*.py
-
-# Integration files
-api_integrations.py
-redis_ai_*.py
-*_integration*.py
-*_fixed*.py
-*_complete*.py
-app_fixes.py
-stats_fix.py
-
 # Corrected/temporary files
 corrected_*.js
 *_corrected.*
