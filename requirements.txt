@@ -1,0 +1,31 @@
+# Core Flask dependencies
+Flask==2.3.3
+Flask-CORS==4.0.0
+
+# Redis for database
+redis==5.0.1
+
+# Environment management
+python-dotenv==1.0.0
+
+# HTTP requests
+requests==2.31.0
+
+# JSON handling
+jsonify==0.5
+
+# Date and time handling
+python-dateutil==2.8.2
+
+# Security
+Werkzeug==2.3.7
+
+# AI Services
+assemblyai==0.17.0
+
+# Development dependencies
+gunicorn==21.2.0
+
+# Optional: For production deployment
+# uWSGI==2.0.22
+# nginx (system package)
