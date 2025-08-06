@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: dsa-interview-platform
+    env: python
+    buildCommand: "pip install -r requirements.txt && python scripts/setup_problems.py"
+    startCommand: "gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --max-requests 1000 --max-requests-jitter 100"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: FLASK_ENV
+        value: production
+      - key: FLASK_DEBUG
+        value: False
+      - key: REDIS_HOST
+        sync: false
+      - key: REDIS_PORT
+        sync: false
+      - key: REDIS_PASSWORD
+        sync: false
+      - key: REDIS_USERNAME
+        value: default
+      - key: ASSEMBLYAI_API_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: BASE_URL
+        sync: false
+    healthCheckPath: /
+    disk:
+      name: dsa-interview-disk
+      mountPath: /opt/render/project/data
+      sizeGB: 1
