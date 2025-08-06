@@ -7,7 +7,7 @@ import hashlib
 import uuid
 import time
 from dotenv import load_dotenv
-from redis_ai_fixed import get_redis_ai
+# from redis_ai_fixed import get_redis_ai
 from ai_service import AIService
 
 load_dotenv()
