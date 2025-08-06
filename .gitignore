@@ -1,8 +1,7 @@
 # Environment variables
 .env
-.env.local
-.env.production
-.env.redis_cloud
+.env.*
+!.env.example
 
 # Python
 __pycache__/
@@ -50,29 +49,15 @@ venv.bak/
 ehthumbs.db
 Thumbs.db
 
-# Logs
+# Logs and process files
 *.log
-*.log.*
 logs/
 server.pid
-server_*.log
-app_*.log
-deployment.log
-persistent_server.log
-working_server.log
-server_debug.log
-app_persistent.log
-app_improved.log
 
 # Backup files
 backup_*.py
 *.backup
 *_backup.*
-
-# Test files
-test_*.py
-*_test.py
-quick_*.py
 
 # Temporary files
 *.tmp
@@ -80,16 +65,15 @@ quick_*.py
 temp/
 tmp/
 
-# Development scripts
+# Development and deployment scripts (keep essential ones)
 deploy_*.sh
 start_*.sh
 stop_*.sh
 check_*.sh
 keep_alive.sh
 run_*.sh
-test_*.sh
 
-# Development documentation
+# Development documentation and temporary files
 *_FIXES*.md
 *_SUCCESS*.md
 *_STATUS*.md
@@ -101,7 +85,29 @@ SUBMISSION.md
 DEMO_SCRIPT.md
 video_script.md
 deploy.md
+GITHUB_COMMIT_PLAN.md
+SCRIPTS_COMMIT_MESSAGES.md
 
 # Corrected/temporary files
 corrected_*.js
 *_corrected.*
+
+# Project-specific temporary files
+quick_*.py
+test_*.py
+*_test.py
+*_fixed.py
+*_complete.py
+analysis_*.py
+comprehensive_problems*.py
+create_*.py
+add_*.py
+fix_*.py
+init_*.py
+redis_*.py
+voice_*.py
+ai_*.py
+stats_*.py
+generate_*.py
+verify_*.py
+
