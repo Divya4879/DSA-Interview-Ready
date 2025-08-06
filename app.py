@@ -430,12 +430,12 @@ def get_problems():
 @app.route('/api/recommendations')
 def get_recommendations():
     user_id = session.get('user_id', 'anonymous')
-    recommendations = #redis_ai.get_problem_recommendations(user_id)
+    recommendations = []  # TODO: Implement recommendations
     return jsonify(recommendations)
 
 @app.route('/api/trending')
 def get_trending():
-    trending = #redis_ai.get_trending_problems()
+    trending = []  # redis_ai.get_trending_problems()
     return jsonify(trending)
 
 # Removed similar problems API - replaced with direct navigation links
