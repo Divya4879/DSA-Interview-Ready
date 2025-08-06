@@ -1,0 +1,139 @@
+# Environment variables
+.env
+.env.local
+.env.production
+.env.redis_cloud
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+*.log.*
+logs/
+server.pid
+server_*.log
+app_*.log
+deployment.log
+persistent_server.log
+working_server.log
+server_debug.log
+app_persistent.log
+app_improved.log
+
+# Backup files
+backup_*.py
+*.backup
+*_backup.*
+
+# Test files
+test_*.py
+*_test.py
+quick_*.py
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Development scripts
+deploy_*.sh
+start_*.sh
+stop_*.sh
+check_*.sh
+keep_alive.sh
+run_*.sh
+test_*.sh
+
+# Development documentation
+*_FIXES*.md
+*_SUCCESS*.md
+*_STATUS*.md
+IMPROVEMENTS_*.md
+REALISTIC_*.md
+ASSEMBLYAI_*.md
+REDIS_*.md
+SUBMISSION.md
+DEMO_SCRIPT.md
+video_script.md
+deploy.md
+
+# Problem generation scripts (keep only essential ones)
+generate_problems.py
+create_*.py
+add_*.py
+fix_*.py
+comprehensive_problems*.py
+*_problems*.py
+
+# AI/Voice test files
+voice_*.py
+ai_*.py
+*_voice*.py
+*_ai*.py
+analysis_*.py
+senior_recruiter_*.py
+
+# Redis setup files (keep only essential)
+redis_*.py
+*_redis*.py
+init_redis*.py
+setup_redis*.py
+verify_redis*.py
+
+# Integration files
+api_integrations.py
+redis_ai_*.py
+*_integration*.py
+*_fixed*.py
+*_complete*.py
+app_fixes.py
+stats_fix.py
+
+# Corrected/temporary files
+corrected_*.js
+*_corrected.*
