@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}DSA Interview Preparation Platform{% endblock %}</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- External Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v={{ range(1000, 9999) | random }}">
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="Master DSA interviews with AI-powered analysis and expert feedback">
+    <meta name="theme-color" content="#dc2626">
+    <meta name="keywords" content="DSA, coding interview, algorithms, data structures, interview preparation">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-red': '#dc2626',
+                        'secondary-yellow': '#fbbf24',
+                        'primary-yellow': '#f59e0b',
+                        'bg-dark': '#0f172a',
+                        'bg-dark-card': '#1e293b',
+                        'bg-dark-elevated': '#334155',
+                        'text-primary': '#f8fafc',
+                        'text-secondary': '#cbd5e1',
+                        'text-tertiary': '#94a3b8'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-bg-dark to-slate-900 text-text-primary min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-background"></div>
+        <div class="header-content">
+            <div class="container mx-auto px-4 h-full flex flex-col justify-center">
+                <div class="header-nav">
+                    <div class="logo">
+                        <span class="logo-icon">🎯</span>
+                        <span class="logo-text">DSA Interview Mastery</span>
+                    </div>
+                    <nav class="nav-links">
+                        <a href="/" class="nav-link">Dashboard</a>
+                        <a href="/practice" class="nav-link">Practice</a>
+                    </nav>
+                </div>
+                <div class="header-hero">
+                    <h1 class="header-title">Master Technical Interviews</h1>
+                    <p class="header-subtitle">Expert-level analysis • Real-time feedback • Interview-ready skills</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content flex-1">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="container mx-auto px-4">
+                <div class="footer-grid">
+                    <div class="footer-section">
+                        <h3 class="footer-title">DSA Interview Prep</h3>
+                        <p class="footer-description">
+                            Master data structures and algorithms with expert-level analysis and personalized feedback.
+                        </p>
+                        <div class="footer-badges">
+                            <span class="footer-badge">🎯 Expert Analysis</span>
+                            <span class="footer-badge">⚡ Real-time Feedback</span>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4 class="footer-subtitle">Practice Areas</h4>
+                        <ul class="footer-links">
+                            <li><a href="/practice?topic=arrays">Arrays & Strings</a></li>
+                            <li><a href="/practice?topic=trees">Trees & Graphs</a></li>
+                            <li><a href="/practice?topic=dynamic-programming">Dynamic Programming</a></li>
+                            <li><a href="/practice?topic=sorting">Sorting & Searching</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4 class="footer-subtitle">Difficulty Levels</h4>
+                        <ul class="footer-links">
+                            <li><a href="/practice?difficulty=easy">🟢 Easy Problems</a></li>
+                            <li><a href="/practice?difficulty=medium">🟡 Medium Problems</a></li>
+                            <li><a href="/practice?difficulty=hard">🔴 Hard Problems</a></li>
+                            
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4 class="footer-subtitle">Features</h4>
+                        <ul class="footer-links">
+                            <li>🤖 AI-Powered Analysis</li>
+                            <li>👨‍💼 Senior Recruiter Insights</li>
+                            <li>📈 Progress Tracking</li>
+                            <li>🎯 Interview Readiness</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <div class="footer-copyright">
+                        <p>&copy; 2025 DSA Interview Preparation Platform. Built by <a href='github.com//Divya4879'>Divya</a> for the Redis AI Challenge by Dev.to</p>
+                    </div>
+                     
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+    
+    <!-- Global JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add active class to current nav item
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Add fade-in animation to cards
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.classList.add('fade-in-up');
+            });
+        });
+    </script>
+</body>
+</html>
