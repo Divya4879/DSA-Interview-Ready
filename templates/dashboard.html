@@ -1,0 +1,423 @@
+{% extends "base.html" %}
+
+{% block title %}DSA Interview Preparation Platform{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <!-- Main Header -->
+    <div class="hero-section fade-in-up">
+        <h1 class="hero-title">🎯 <span class='text'>DSA Interview Practice</span> 👩‍💻👨‍💻🗣️</h1>
+        <p class="hero-subtitle">Master Data Structures & Algorithms with Expert-Level Analysis</p>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <span class="hero-stat-number" id="problems-solved">{{ stats.problems_solved|default(0, true) }}</span>
+                <span class="hero-stat-label">Problems Solved</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-number" id="average-score">{{ stats.average_score|default(0, true) }}</span>
+                <span class="hero-stat-label">Average Score</span>
+            </div>
+            
+            <div class="hero-stat">
+                <span class="hero-stat-number" id="interview-readiness">{{ stats.interview_readiness|default('Beginner', true) }}</span>
+                <span class="hero-stat-label">Interview Level</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interview Readiness Assessment -->
+    <div class="card fade-in-up mb-8">
+        <div class="card-header">
+            <h2 class="card-title">🎖️ Senior Technical Recruiter Assessment</h2>
+            <p class="card-subtitle">Professional evaluation from Fortune 500 recruiting perspective</p>
+        </div>
+        <div id="recruiter-assessment">
+            <div class="loading">
+                <div class="spinner"></div>
+                Loading professional assessment...
+            </div>
+        </div>
+    </div>
+
+    <!-- Performance Analytics -->
+    <div class="grid grid-3 mb-8 fade-in-up">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">📊 Code Quality</h3>
+                <p class="card-subtitle">Technical excellence metrics</p>
+            </div>
+            <div class="text-center py-4">
+                <div class="text-3xl font-bold text-primary-yellow mb-2" id="code-quality-score">Loading...</div>
+                <div class="text-sm text-text-secondary">Overall quality</div>
+                <div class="progress-container mt-3">
+                    <div class="progress-bar" id="code-quality-progress" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">⚡ Algorithm Efficiency</h3>
+                <p class="card-subtitle">Time & space complexity</p>
+            </div>
+            <div class="text-center py-4">
+                <div class="text-3xl font-bold text-success mb-2" id="algorithm-score">Loading...</div>
+                <div class="text-sm text-text-secondary">Optimization level</div>
+                <div class="progress-container mt-3">
+                    <div class="progress-bar" id="algorithm-progress" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">💬 Communication</h3>
+                <p class="card-subtitle">Explanation clarity</p>
+            </div>
+            <div class="text-center py-4">
+                <div class="text-3xl font-bold text-secondary-yellow mb-2" id="communication-score">Loading...</div>
+                <div class="text-sm text-text-secondary">Interview skills</div>
+                <div class="progress-container mt-3">
+                    <div class="progress-bar" id="communication-progress" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skill Development Areas -->
+    <div class="grid grid-2 mb-8 fade-in-up">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">💪 Strengths</h3>
+                <p class="card-subtitle">Areas where you excel</p>
+            </div>
+            <div id="strengths-list">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    Analyzing strengths...
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">🎯 Improvement Areas</h3>
+                <p class="card-subtitle">Focus areas for growth</p>
+            </div>
+            <div id="improvements-list">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    Identifying improvements...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex gap-4 justify-center fade-in-up">
+        <a href="/practice" class="btn btn-primary">
+            🚀 Start Practice Session
+        </a>
+        
+
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🎯 DSA Interview Platform Dashboard loaded');
+    initializeDashboard();
+    
+    const refreshBtn = document.getElementById('refresh-assessment');
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', refreshAssessment);
+    }
+});
+
+function initializeDashboard() {
+    try {
+        loadUserStats();
+        loadRecruiterAssessment();
+        loadSkillAnalysis();
+        console.log('✅ Dashboard initialization complete');
+    } catch (error) {
+        console.error('❌ Dashboard initialization failed:', error);
+    }
+}
+
+function loadUserStats() {
+    fetch('/api/user-stats')
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return response.json();
+        })
+        .then(stats => {
+            updateStatDisplay('problems-solved', stats.problems_solved || 0);
+            updateStatDisplay('average-score', Math.round(stats.average_score || 0));
+            updateStatDisplay('current-streak', stats.current_streak || 0);
+            
+            // Update performance metrics
+            updateStatDisplay('code-quality-score', stats.code_quality || 0);
+            updateStatDisplay('algorithm-score', stats.algorithm_efficiency || 0);
+            updateStatDisplay('communication-score', stats.communication_skills || 0);
+            
+            // Update progress bars
+            updateProgressBar('code-quality-progress', stats.code_quality || 0);
+            updateProgressBar('algorithm-progress', stats.algorithm_efficiency || 0);
+            updateProgressBar('communication-progress', stats.communication_skills || 0);
+        })
+        .catch(error => {
+            console.error('❌ User stats loading failed:', error);
+        });
+}
+
+function loadRecruiterAssessment() {
+    const container = document.getElementById('recruiter-assessment');
+    if (!container) return;
+    
+    fetch('/api/recruiter-assessment')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(assessment => {
+            if (assessment.has_submissions) {
+                displayRecruiterAssessment(assessment);
+            } else {
+                displayNoAssessmentMessage();
+            }
+        })
+        .catch(error => {
+            console.error('❌ Recruiter assessment failed:', error);
+            displayNoAssessmentMessage();
+        });
+}
+
+function displayRecruiterAssessment(assessment) {
+    const container = document.getElementById('recruiter-assessment');
+    if (!container) return;
+    
+    container.innerHTML = `
+        <div class="recruiter-assessment">
+            <div class="assessment-header">
+                <div class="overall-rating">
+                    <span class="rating-number">${assessment.overall_rating}/10</span>
+                    <span class="rating-label">Overall Rating</span>
+                </div>
+                <div class="hiring-decision">
+                    <span class="decision-text">${assessment.hiring_decision}</span>
+                    <span class="decision-label">Hiring Recommendation</span>
+                </div>
+            </div>
+            
+            <div class="assessment-stats mb-4">
+                <div class="flex justify-between text-sm text-gray-600">
+                    <span>📊 ${assessment.submission_count} submissions analyzed</span>
+                    <span>🧩 ${assessment.problems_attempted} unique problems</span>
+                    <span>🎯 ${assessment.interview_readiness} level</span>
+                </div>
+            </div>
+            
+            <div class="assessment-insights">
+                <h4 class="insights-title">🎯 Key Insights from Your Actual Performance</h4>
+                <ul class="insights-list">
+                    ${assessment.key_insights.map(insight => `
+                        <li class="insight-item">
+                            <span class="insight-bullet">•</span>
+                            ${insight}
+                        </li>
+                    `).join('')}
+                </ul>
+            </div>
+            
+            <div class="assessment-recommendation">
+                <h4 class="recommendation-title">💡 Professional Recommendation</h4>
+                <p class="recommendation-text">${assessment.recommendation}</p>
+            </div>
+        </div>
+    `;
+}
+
+function displayNoAssessmentMessage() {
+    const container = document.getElementById('recruiter-assessment');
+    if (!container) return;
+    
+    container.innerHTML = `
+        <div class="no-assessment-message">
+            <div class="text-center py-8">
+                <div class="text-6xl mb-4">🎯</div>
+                <h3 class="text-xl font-semibold mb-3 text-gray-700">No Assessment Available Yet</h3>
+                <p class="text-gray-600 mb-6">Complete at least one coding problem to receive your professional technical recruiter assessment.</p>
+                <a href="/practice" class="btn btn-primary">
+                    🚀 Start Your First Problem
+                </a>
+            </div>
+        </div>
+    `;
+}
+
+function loadSkillAnalysis() {
+    // Only load real skill analysis if user has submissions
+    fetch('/api/user-stats')
+        .then(response => response.json())
+        .then(stats => {
+            if (stats.total_submissions > 0) {
+                loadRealSkillAnalysis(stats);
+            } else {
+                displayNoSkillAnalysis();
+            }
+        })
+        .catch(error => {
+            console.error('❌ Skill analysis failed:', error);
+            displayNoSkillAnalysis();
+        });
+}
+
+function loadRealSkillAnalysis(stats) {
+    // Load actual strengths based on performance
+    const strengthsContainer = document.getElementById('strengths-list');
+    if (strengthsContainer && stats.strengths && stats.strengths.length > 0) {
+        strengthsContainer.innerHTML = `
+            <ul class="skill-list">
+                ${stats.strengths.map(strength => `
+                    <li class="skill-item strength">
+                        <span class="skill-icon">✅</span>
+                        <span class="skill-text">${strength}</span>
+                    </li>
+                `).join('')}
+            </ul>
+        `;
+    } else {
+        strengthsContainer.innerHTML = `
+            <div class="text-center py-4 text-gray-500">
+                <div class="text-2xl mb-2">📊</div>
+                <p>Complete more problems to identify your strengths</p>
+            </div>
+        `;
+    }
+    
+    // Load actual improvement areas
+    const improvementsContainer = document.getElementById('improvements-list');
+    if (improvementsContainer && stats.weaknesses && stats.weaknesses.length > 0) {
+        improvementsContainer.innerHTML = `
+            <ul class="skill-list">
+                ${stats.weaknesses.map(weakness => `
+                    <li class="skill-item improvement">
+                        <span class="skill-icon">🎯</span>
+                        <span class="skill-text">${weakness}</span>
+                    </li>
+                `).join('')}
+            </ul>
+        `;
+    } else {
+        improvementsContainer.innerHTML = `
+            <div class="text-center py-4 text-gray-500">
+                <div class="text-2xl mb-2">🎯</div>
+                <p>Complete more problems to identify improvement areas</p>
+            </div>
+        `;
+    }
+}
+
+function displayNoSkillAnalysis() {
+    const strengthsContainer = document.getElementById('strengths-list');
+    const improvementsContainer = document.getElementById('improvements-list');
+    
+    const noDataMessage = `
+        <div class="text-center py-6 text-gray-500">
+            <div class="text-3xl mb-3">📝</div>
+            <p class="font-medium">No data available</p>
+            <p class="text-sm">Submit solutions to see your skill analysis</p>
+        </div>
+    `;
+    
+    if (strengthsContainer) strengthsContainer.innerHTML = noDataMessage;
+    if (improvementsContainer) improvementsContainer.innerHTML = noDataMessage;
+}
+
+function updateStatDisplay(elementId, value) {
+    const element = document.getElementById(elementId);
+    if (!element) return;
+    
+    try {
+        const startValue = parseInt(element.textContent) || 0;
+        const endValue = parseInt(value) || 0;
+        const duration = 1500;
+        const startTime = Date.now();
+        
+        function updateNumber() {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const currentValue = Math.round(startValue + (endValue - startValue) * progress);
+            element.textContent = currentValue;
+            
+            if (progress < 1) {
+                requestAnimationFrame(updateNumber);
+            }
+        }
+        
+        updateNumber();
+    } catch (error) {
+        console.error('Error updating stat display:', error);
+        element.textContent = value;
+    }
+}
+
+function updateProgressBar(elementId, percentage) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        const clampedPercentage = Math.min(Math.max(percentage, 0), 100);
+        element.style.width = clampedPercentage + '%';
+    }
+}
+
+function getStatusIcon(status) {
+    const statusMap = {
+        'Solved': '✅',
+        'Attempted': '🔄',
+        'In Progress': '⏳',
+        'Not Started': '📝'
+    };
+    return statusMap[status] || '📝';
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function refreshAssessment() {
+    const refreshBtn = document.getElementById('refresh-assessment');
+    if (refreshBtn) {
+        const originalText = refreshBtn.textContent;
+        refreshBtn.textContent = '🔄 Refreshing...';
+        refreshBtn.disabled = true;
+        
+        initializeDashboard();
+        
+        setTimeout(() => {
+            refreshBtn.textContent = originalText;
+            refreshBtn.disabled = false;
+            showNotification('✅ Assessment refreshed!');
+        }, 2000);
+    }
+}
+
+function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+</script>
+{% endblock %}
