@@ -1,0 +1,588 @@
+/* Header Styles - 40vh height, 100vw width */
+.main-header {
+    height: 40vh;
+    width: 100vw;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+}
+
+.header-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(251, 191, 36, 0.1) 100%);
+    z-index: 1;
+}
+
+.header-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.header-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #dc2626, #fbbf24);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.header-nav .icon .logo-icon{
+    font-size: 2rem;
+    background: green;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: #fbbf24;
+    background: rgba(251, 191, 36, 0.1);
+}
+
+.nav-link.active {
+    color: #fbbf24;
+    background: rgba(251, 191, 36, 0.2);
+}
+
+.header-hero {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.header-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #f8fafc, #cbd5e1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+}
+
+.header-subtitle {
+    font-size: 1.25rem;
+    color: #94a3b8;
+    font-weight: 400;
+}
+
+/* Hero Section for Dashboard */
+.hero-section{
+    background: linear-gradient(135deg, #1e293b, #334155);
+    border-radius: 1rem;
+    padding: 3rem 2rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    border: 1px solid #475569;
+}
+
+.hero-title .text{
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #dc2626, #fbbf24);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-title{
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+    font-size: 1.1rem;
+    color: #94a3b8;
+    margin-bottom: 2rem;
+}
+
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.hero-stat {
+    text-align: center;
+}
+
+.hero-stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #fbbf24;
+    margin-bottom: 0.5rem;
+}
+
+.hero-stat-label {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Footer Styles - 100vw width, fixed to bottom */
+.main-footer {
+    width: 100vw;
+    background: #0f172a;
+    border-top: 1px solid #334155;
+    margin-top: auto;
+}
+
+.footer-content {
+    padding: 3rem 0 1rem 0;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-section {
+    color: #cbd5e1;
+}
+
+.footer-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #f8fafc;
+}
+
+.footer-subtitle {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #fbbf24;
+}
+
+.footer-description {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    color: #94a3b8;
+}
+
+.footer-badges {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.footer-badge {
+    background: rgba(251, 191, 36, 0.1);
+    color: #fbbf24;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #fbbf24;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2rem;
+    border-top: 1px solid #334155;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.footer-copyright {
+    color: #64748b;
+    font-size: 0.875rem;
+    width:100vw;
+    text-align: center;
+}
+
+.footer-stats {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.footer-stat {
+    background: rgba(220, 38, 38, 0.1);
+    color: #dc2626;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid rgba(220, 38, 38, 0.3);
+}
+
+/* Recruiter Assessment Styles */
+.recruiter-assessment {
+    background: linear-gradient(135deg, #1e293b, #334155);
+    border-radius: 1rem;
+    padding: 2rem;
+    border: 1px solid #475569;
+}
+
+.assessment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.overall-rating {
+    text-align: center;
+}
+
+.rating-number {
+    display: block;
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #dc2626, #fbbf24);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.rating-label {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.hiring-decision {
+    text-align: center;
+}
+
+.decision-text {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #22c55e;
+    margin-bottom: 0.25rem;
+}
+
+.decision-label {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.assessment-insights {
+    margin-bottom: 2rem;
+}
+
+.insights-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #fbbf24;
+    margin-bottom: 1rem;
+}
+
+.insights-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.insight-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+    padding: 0.75rem;
+    background: rgba(51, 65, 85, 0.5);
+    border-radius: 0.5rem;
+}
+
+.insight-bullet {
+    color: #fbbf24;
+    margin-right: 0.75rem;
+    font-weight: bold;
+}
+
+.assessment-recommendation {
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+}
+
+.recommendation-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #22c55e;
+    margin-bottom: 1rem;
+}
+
+.recommendation-text {
+    color: #cbd5e1;
+    line-height: 1.6;
+}
+
+/* Problem Item Styles */
+.problem-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: #334155;
+    border-radius: 0.5rem;
+    margin-bottom: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.problem-item:hover {
+    background: #475569;
+    transform: translateY(-1px);
+}
+
+.problem-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.problem-status {
+    font-size: 1.5rem;
+}
+
+.problem-details {
+    flex: 1;
+}
+
+.problem-title {
+    font-weight: 600;
+    color: #f8fafc;
+    margin-bottom: 0.25rem;
+}
+
+.problem-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.problem-topic {
+    color: #94a3b8;
+    font-size: 0.875rem;
+}
+
+.problem-score {
+    text-align: right;
+}
+
+.score-value {
+    font-weight: 700;
+    color: #fbbf24;
+    font-size: 1.125rem;
+}
+
+.score-language {
+    color: #64748b;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+/* Skill List Styles */
+.skill-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.skill-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.skill-item.strength {
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.skill-item.improvement {
+    background: rgba(251, 191, 36, 0.1);
+    border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+.skill-item:hover {
+    transform: translateY(-1px);
+}
+
+.skill-icon {
+    font-size: 1.25rem;
+}
+
+.skill-text {
+    color: #cbd5e1;
+    font-size: 0.875rem;
+}
+
+/* Notification Styles */
+.notification {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background: #22c55e;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-header {
+        height: 50vh;
+    }
+    
+    .header-title {
+        font-size: 2.5rem;
+    }
+    
+    .header-subtitle {
+        font-size: 1rem;
+    }
+    
+    .nav-links {
+        gap: 1rem;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .assessment-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .problem-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .problem-score {
+        align-self: flex-end;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-header {
+        height: 60vh;
+    }
+    
+    .header-nav {
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .hero-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
