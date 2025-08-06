@@ -1,0 +1,496 @@
+{% extends "base.html" %}
+
+{% block title %}Technical Interview Analysis - CodeInterview AI{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold mb-2">📊 Senior Technical Recruiter Analysis</h1>
+        <p class="text-secondary">Comprehensive evaluation from a Senior Technical Recruitor perspective</p>
+    </div>
+
+    <!-- Overall Rating Card -->
+    <div class="rating-card p-6 rounded-lg mb-8 text-white">
+        <div class="flex items-center justify-between">
+            <div>
+                <h2 class="text-2xl font-bold mb-2">Overall Technical Rating</h2>
+                <div class="flex items-center gap-4">
+                    <div class="text-4xl font-bold" id="overall-rating">{{ analysis.overall_rating|default('N/A', true) }}/10</div>
+                    <div>
+                        <div class="text-lg font-semibold" id="rating-level">{{ analysis.rating_level|default('Evaluating...', true) }}</div>
+                        <div class="text-sm opacity-90">{{ analysis.rating_description|default('Complete assessments to get detailed analysis', true) }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-right">
+                <div class="text-lg font-semibold">Interview Readiness</div>
+                <div class="text-2xl font-bold" id="interview-readiness">{{ analysis.interview_readiness|default('Beginner', true) }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Key Metrics Grid -->
+    <div class="metrics-grid mb-8">
+        <div class="metric-card text-center">
+            <div class="text-3xl font-bold text-green-400 mb-2">{{ analysis.problems_solved|default(0, true) }}</div>
+            <div class="text-secondary text-sm">Problems Solved</div>
+            <div class="text-xs text-tertiary mt-1">{{ analysis.success_rate|default(0, true) }}% success rate</div>
+        </div>
+        <div class="metric-card text-center">
+            <div class="text-3xl font-bold text-primary-yellow mb-2">{{ analysis.avg_score|default(0, true) }}</div>
+            <div class="text-secondary text-sm">Average Score</div>
+            <div class="text-xs text-tertiary mt-1">Last 10 submissions</div>
+        </div>
+        <div class="metric-card text-center">
+            <div class="text-3xl font-bold text-secondary-yellow mb-2">{{ analysis.communication_score|default(0, true) }}/10</div>
+            <div class="text-secondary text-sm">Communication</div>
+            <div class="text-xs text-tertiary mt-1">Explanation quality</div>
+        </div>
+        <div class="metric-card text-center">
+            <div class="text-3xl font-bold text-primary-red mb-2">{{ analysis.consistency_score|default(0, true) }}%</div>
+            <div class="text-secondary text-sm">Consistency</div>
+            <div class="text-xs text-tertiary mt-1">Performance stability</div>
+        </div>
+    </div>
+
+    <!-- Detailed Analysis Sections -->
+    <div class="analysis-grid mb-8">
+        <!-- Technical Skills Assessment -->
+        <div class="analysis-card">
+            <h3 class="text-xl font-semibold mb-4 text-secondary-yellow">🎯 Technical Skills Assessment</h3>
+            <div class="space-y-4">
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="font-medium">Problem Solving</span>
+                        <span class="text-sm text-secondary">{{ analysis.problem_solving_score|default(0, true) }}/10</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar technical-progress" 
+                             data-width="{{ (analysis.problem_solving_score|default(0, true)|float * 10)|round|int }}"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="font-medium">Code Quality</span>
+                        <span class="text-sm text-secondary">{{ analysis.code_quality_score|default(0, true) }}/10</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar technical-progress" 
+                             data-width="{{ (analysis.code_quality_score|default(0, true)|float * 10)|round|int }}"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="font-medium">Algorithm Knowledge</span>
+                        <span class="text-sm text-secondary">{{ analysis.algorithm_score|default(0, true) }}/10</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar technical-progress" 
+                             data-width="{{ (analysis.algorithm_score|default(0, true)|float * 10)|round|int }}"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="font-medium">Time Complexity Analysis</span>
+                        <span class="text-sm text-secondary">{{ analysis.complexity_score|default(0, true) }}/10</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar technical-progress" 
+                             data-width="{{ (analysis.complexity_score|default(0, true)|float * 10)|round|int }}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Communication & Soft Skills -->
+        <div class="analysis-card">
+            <h3 class="text-xl font-semibold mb-4 text-secondary-yellow">💬 Communication & Soft Skills</h3>
+            <div class="space-y-4">
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="font-medium">Explanation Clarity</span>
+                        <span class="text-sm text-secondary">{{ analysis.explanation_score|default(0, true) }}/10</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar communication-progress" 
+                             data-width="{{ (analysis.explanation_score|default(0, true)|float * 10)|round|int }}"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="font-medium">Thought Process</span>
+                        <span class="text-sm text-secondary">{{ analysis.thought_process_score|default(0, true) }}/10</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar communication-progress" 
+                             data-width="{{ (analysis.thought_process_score|default(0, true)|float * 10)|round|int }}"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="font-medium">Question Handling</span>
+                        <span class="text-sm text-secondary">{{ analysis.question_handling_score|default(0, true) }}/10</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar communication-progress" 
+                             data-width="{{ (analysis.question_handling_score|default(0, true)|float * 10)|round|int }}"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="font-medium">Confidence Level</span>
+                        <span class="text-sm text-secondary">{{ analysis.confidence_score|default(0, true) }}/10</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar communication-progress" 
+                             data-width="{{ (analysis.confidence_score|default(0, true)|float * 10)|round|int }}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Senior Recruiter Insights -->
+    <div class="analysis-card mb-8">
+        <h3 class="text-xl font-semibold mb-4 text-secondary-yellow">🎖️ Senior Technical Recruiter Insights</h3>
+        <div class="insights-grid">
+            <div>
+                <h4 class="font-semibold text-green-400 mb-3">💪 Key Strengths</h4>
+                <ul class="space-y-2">
+                    {% if analysis.recruiter_strengths and analysis.recruiter_strengths|length > 0 %}
+                        {% for strength in analysis.recruiter_strengths %}
+                        <li class="insight-item">
+                            <span class="text-green-400 mr-2">✓</span>
+                            <span class="text-secondary">{{ strength }}</span>
+                        </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="text-secondary italic">Complete more assessments to identify your strengths</li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold text-orange-400 mb-3">🎯 Areas for Improvement</h4>
+                <ul class="space-y-2">
+                    {% if analysis.recruiter_improvements and analysis.recruiter_improvements|length > 0 %}
+                        {% for improvement in analysis.recruiter_improvements %}
+                        <li class="insight-item">
+                            <span class="text-orange-400 mr-2">⚠</span>
+                            <span class="text-secondary">{{ improvement }}</span>
+                        </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="text-secondary italic">Keep practicing to get personalized improvement suggestions</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hiring Recommendation -->
+    <div class="analysis-card mb-8">
+        <h3 class="text-xl font-semibold mb-4 text-secondary-yellow">📋 Hiring Recommendation</h3>
+        <div class="recommendation-card">
+            <div class="recommendation-header">
+                <div class="text-2xl">{{ analysis.recommendation_emoji|default('🤔', true) }}</div>
+                <div>
+                    <div class="font-semibold text-lg">{{ analysis.hiring_recommendation|default('Needs More Data', true) }}</div>
+                    <div class="text-sm text-secondary">{{ analysis.recommendation_subtitle|default('Complete more assessments for detailed recommendation', true) }}</div>
+                </div>
+            </div>
+            <p class="text-secondary leading-relaxed">{{ analysis.detailed_recommendation|default('Your hiring recommendation will appear here after completing several technical assessments. Our AI analyzes your problem-solving approach, code quality, communication skills, and technical depth to provide insights similar to what a senior technical recruiter would observe during a live interview.', true) }}</p>
+        </div>
+    </div>
+
+    <!-- Topic Performance -->
+    <div class="analysis-card mb-8">
+        <h3 class="text-xl font-semibold mb-4 text-secondary-yellow">📈 Topic Performance Analysis</h3>
+        {% if analysis.topic_performance and analysis.topic_performance|length > 0 %}
+            <div class="topic-grid">
+                {% for topic, perf in analysis.topic_performance.items() %}
+                <div class="topic-card">
+                    <div class="topic-header">
+                        <span class="font-medium">{{ topic.title().replace('-', ' ') }}</span>
+                        <span class="text-sm text-secondary">{{ perf.average_score }}%</span>
+                    </div>
+                    <div class="topic-progress-container">
+                        <div class="topic-progress-bar" 
+                             data-width="{{ perf.average_score }}"></div>
+                    </div>
+                    <div class="text-xs text-tertiary">{{ perf.attempts }} attempts • {{ perf.trend }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-secondary text-center py-8">No topic performance data available. Start solving problems to see your performance breakdown by topic.</p>
+        {% endif %}
+    </div>
+
+    <!-- Action Items -->
+    <div class="analysis-card mb-8">
+        <h3 class="text-xl font-semibold mb-4 text-secondary-yellow">🚀 Recommended Action Items</h3>
+        <div class="action-grid">
+            {% if analysis.action_items and analysis.action_items|length > 0 %}
+                {% for action in analysis.action_items %}
+                <div class="action-card">
+                    <div class="action-content">
+                        <div class="text-primary-yellow text-xl">{{ action.icon|default('💡', true) }}</div>
+                        <div>
+                            <div class="font-semibold mb-1">{{ action.title|default('Practice More', true) }}</div>
+                            <div class="text-sm text-secondary">{{ action.description|default('Continue solving problems to improve your skills', true) }}</div>
+                            {% if action.priority %}
+                            <div class="text-xs text-primary-red mt-2">Priority: {{ action.priority }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="action-card">
+                    <div class="action-content">
+                        <div class="text-primary-yellow text-xl">🎯</div>
+                        <div>
+                            <div class="font-semibold mb-1">Start Your Journey</div>
+                            <div class="text-sm text-secondary">Begin solving problems to receive personalized action items and improvement recommendations.</div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation-section">
+        <a href="/practice" class="btn btn-primary">Continue Practice</a>
+        <a href="/" class="btn btn-outline">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}
+
+<style>
+/* Rating Card */
+.rating-card {
+    background: linear-gradient(135deg, var(--primary-red), var(--secondary-yellow));
+}
+
+/* Metrics Grid */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.metric-card {
+    background: var(--bg-dark-card);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+}
+
+/* Analysis Grid */
+.analysis-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.analysis-card {
+    background: var(--bg-dark-card);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+}
+
+/* Skill Items */
+.skill-item {
+    transition: all 0.3s ease;
+}
+
+.skill-item:hover {
+    transform: translateY(-1px);
+}
+
+.skill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+/* Progress Bars */
+.progress-container {
+    width: 100%;
+    height: 0.5rem;
+    background-color: var(--bg-dark-elevated);
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 1s ease-in-out;
+    width: 0%;
+}
+
+.technical-progress {
+    background: linear-gradient(90deg, var(--primary-red), var(--secondary-yellow));
+}
+
+.communication-progress {
+    background: linear-gradient(90deg, #22c55e, #3b82f6);
+}
+
+/* Insights Grid */
+.insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.insight-item {
+    display: flex;
+    align-items: flex-start;
+}
+
+/* Recommendation Card */
+.recommendation-card {
+    background: var(--bg-dark-elevated);
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.recommendation-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Topic Grid */
+.topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.topic-card {
+    background: var(--bg-dark-elevated);
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.topic-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.topic-progress-container {
+    width: 100%;
+    height: 0.5rem;
+    background-color: var(--bg-dark-card);
+    border-radius: 9999px;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+}
+
+.topic-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-red), var(--secondary-yellow));
+    border-radius: 9999px;
+    transition: width 1s ease-in-out;
+    width: 0%;
+}
+
+/* Action Grid */
+.action-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.action-card {
+    background: var(--bg-dark-elevated);
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.action-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+/* Navigation */
+.navigation-section {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .analysis-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .insights-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .topic-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .navigation-section {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+</style>
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Animate progress bars
+    const progressBars = document.querySelectorAll('.progress-bar');
+    progressBars.forEach(bar => {
+        const width = bar.getAttribute('data-width') + '%';
+        setTimeout(() => {
+            bar.style.width = width;
+        }, 100);
+    });
+    
+    // Animate topic progress bars
+    const topicBars = document.querySelectorAll('.topic-progress-bar');
+    topicBars.forEach(bar => {
+        const width = bar.getAttribute('data-width') + '%';
+        setTimeout(() => {
+            bar.style.width = width;
+        }, 200);
+    });
+    
+    console.log('Analysis page loaded with animations');
+});
+</script>
+{% endblock %}
